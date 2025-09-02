@@ -61,13 +61,13 @@ public class GameManager : MonoBehaviour
     private SocketIOManager _socketIoManager;
 
     private KeyStruct m_Key;
-
+  
     private void OnEnable()
     {
         OnFreeSpinReceived += delegate
         {
             FreeSpinAction();
-            m_UIManager.GetText(m_Key.m_text_free_spin_count).text = m_SocketManager.resultData.freeSpinCount.ToString();
+           // m_UIManager.GetText(m_Key.m_text_free_spin_count).text = m_SocketManager.resultdata.payload.respinCount.ToString();
             m_UIManager.GetGameObject(m_Key.m_object_free_spin_panel).SetActive(true);
         };
         OnFreeSpinEnded += delegate
@@ -167,6 +167,12 @@ public class GameManager : MonoBehaviour
 
         m_UIManager.GetButton(m_Key.m_button_music_off).onClick.RemoveAllListeners();
         m_UIManager.GetButton(m_Key.m_button_music_off).onClick.AddListener(delegate { OnMusicButtonClicked(); m_AudioController.m_Click_Audio.Play(); });
+        
+         m_UIManager.GetButton(m_Key.m_button_sound_on).onClick.RemoveAllListeners();
+        m_UIManager.GetButton(m_Key.m_button_sound_on).onClick.AddListener(delegate { OnSoundButtonClicked(); m_AudioController.m_Click_Audio.Play(); });
+
+        m_UIManager.GetButton(m_Key.m_button_sound_off).onClick.RemoveAllListeners();
+        m_UIManager.GetButton(m_Key.m_button_sound_off).onClick.AddListener(delegate { OnSoundButtonClicked(); m_AudioController.m_Click_Audio.Play(); });
 
         m_UIManager.GetButton(m_Key.m_button_game_exit).onClick.RemoveAllListeners();
         m_UIManager.GetButton(m_Key.m_button_game_exit).onClick.AddListener(delegate { OpenPopup("quit"); m_AudioController.m_Click_Audio.Play(); });
@@ -235,18 +241,18 @@ public class GameManager : MonoBehaviour
     internal void SetBetMultiplier()
     {
 
-        for(int i = 1; i < m_SocketManager.initUIData.paylines.symbols.Count; i++)
+        for (int i = 1; i < m_SocketManager.initUIData.paylines.symbols.Count; i++)
         {
             Paylines m_Cur_Payline = m_SocketManager.initUIData.paylines;
             Symbol m_Cur_Symbol = m_Cur_Payline.symbols[i];
 
-            switch (m_Cur_Symbol.Name.ToUpper())
+            switch (m_Cur_Symbol.name.ToUpper())
             {
                 case ("777"):
                     //HACK: Data Update In Upper Section
-                    m_UIManager.GetText(m_Key.m_text_tripple_7_combo).text = (m_SocketManager.initialData.Bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_tripple_7_combo).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
 
-                    m_UIManager.GetText(m_Key.m_text_any_7).text = (m_SocketManager.initialData.Bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.mixedPayout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_any_7).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.mixedPayout.ToString())).ToString();
 
                     //Data Update In Paytable
                     m_UIManager.GetText(m_Key.m_text_pay_tripple_7).text = "<color=yellow>3X </color>" + m_Cur_Symbol.payout.ToString();
@@ -255,22 +261,22 @@ public class GameManager : MonoBehaviour
                     break;
                 case ("77"):
                     //HACK: Data Update In Upper Section
-                    m_UIManager.GetText(m_Key.m_text_double_7_combo).text = (m_SocketManager.initialData.Bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_double_7_combo).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
 
                     //Data Update In Paytable
                     m_UIManager.GetText(m_Key.m_text_pay_double_7).text = "<color=yellow>3X </color>" + m_Cur_Symbol.payout.ToString();
                     break;
                 case ("7"):
                     //HACK: Data Update In Upper Section
-                    m_UIManager.GetText(m_Key.m_text_single_7_combo).text = (m_SocketManager.initialData.Bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_single_7_combo).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
 
                     //Data Update In Paytable
                     m_UIManager.GetText(m_Key.m_text_pay_single_7).text = "<color=yellow>3X </color>" + m_Cur_Symbol.payout.ToString();
                     break;
                 case ("BAR/BAR"):
                     //HACK: Data Update In Upper Section
-                    m_UIManager.GetText(m_Key.m_text_double_bar_combo).text = (m_SocketManager.initialData.Bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
-                    m_UIManager.GetText(m_Key.m_text_any_bar).text = (m_SocketManager.initialData.Bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.mixedPayout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_double_bar_combo).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_any_bar).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.mixedPayout.ToString())).ToString();
                     m_UIManager.GetText(m_Key.m_text_pay_any_bar).text = "<color=yellow>3X </color>" + m_Cur_Symbol.payout.ToString();
 
                     //Data Update In Paytable
@@ -278,7 +284,7 @@ public class GameManager : MonoBehaviour
                     break;
                 case ("BAR"):
                     //HACK: Data Update In Upper Section
-                    m_UIManager.GetText(m_Key.m_text_single_bar_combo).text = (m_SocketManager.initialData.Bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_single_bar_combo).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
 
                     //Data Update In Paytable
                     m_UIManager.GetText(m_Key.m_text_pay_single_bar).text = "<color=yellow>3X </color>" + m_Cur_Symbol.payout.ToString();
@@ -292,20 +298,20 @@ public class GameManager : MonoBehaviour
                     break;
                 case ("DOUBLE+"):
                     //Data Update In Upper Section
-                    m_UIManager.GetText(m_Key.m_text_double_dollar).text = (m_SocketManager.initialData.Bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_double_dollar).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
 
                     //Data Update In Paytable
                     m_UIManager.GetText(m_Key.m_text_pay_dollar_description).text = m_Cur_Symbol.description.ToString();
                     break;
                 case ("ADD"):
                     //Data Update In Upper Section
-                    m_UIManager.GetText(m_Key.m_text_single_dollar).text = (m_SocketManager.initialData.Bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_single_dollar).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
                     break;
                 case ("RESPIN"):
                     m_UIManager.GetText(m_Key.m_text_pay_respin_description).text = m_Cur_Symbol.description.ToString();
                     break;
                 default:
-                    m_UIManager.GetText(m_Key.m_text_any).text = (m_SocketManager.initialData.Bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_any).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
                     break;
             }
         }
@@ -313,15 +319,15 @@ public class GameManager : MonoBehaviour
 
     private void BetButtonAssignClick()
     {
-        int m_data_count = m_SocketManager.initialData.Bets.Count;
+        int m_data_count = m_SocketManager.initialData.bets.Count;
         for (int i = 0; i < m_Bet_Buttons.Length; i++)
         {
             Button m_Bet_Button = m_Bet_Buttons[i];
-            if(i < m_data_count)
+            if (i < m_data_count)
             {
-                m_Bet_Button.transform.GetChild(2).GetComponent<TMP_Text>().text = (m_SocketManager.initialData.Bets[i] * 3).ToString();
+                m_Bet_Button.transform.GetChild(2).GetComponent<TMP_Text>().text = (m_SocketManager.initialData.bets[i] ).ToString();
                 m_Bet_Button.onClick.RemoveAllListeners();
-                m_Bet_Button.onClick.AddListener(()=>
+                m_Bet_Button.onClick.AddListener(() =>
                 {
                     m_SlotBehaviour.BetCounter = GetBetCounter(m_Bet_Button);
                     //Debug.Log("<color=red>" + m_SlotBehaviour.BetCounter + "</color>");
@@ -339,9 +345,9 @@ public class GameManager : MonoBehaviour
 
     private int GetBetCounter(Button m_Click_Button)
     {
-        for(int _=0; _<m_Bet_Buttons.Length; _++)
+        for (int _ = 0; _ < m_Bet_Buttons.Length; _++)
         {
-            if(m_Bet_Buttons[_] == m_Click_Button)
+            if (m_Bet_Buttons[_] == m_Click_Button)
             {
                 return _;
             }
@@ -393,7 +399,7 @@ public class GameManager : MonoBehaviour
     internal void InvokeFreeSpin()
     {
         //m_SlotBehaviour.FreeSpin(UnityEngine.Random.Range(1, 6));
-        m_SlotBehaviour.FreeSpin(m_SocketManager.resultData.freeSpinCount);
+        m_SlotBehaviour.FreeSpin(m_SocketManager.resultdata.payload.respinCount);
         OnFreeSpinReceived?.Invoke();
     }
 
@@ -406,6 +412,36 @@ public class GameManager : MonoBehaviour
     {
         //DeanimateInfoMusicButton();
         OpenPopup("info");
+    }
+
+    internal void ReconnectionPopup()
+    {
+        if (m_UIManager.GetGameObject(m_Key.m_object_reconnect_popup) != null)
+        {
+            m_UIManager.GetGameObject(m_Key.m_object_reconnect_popup).SetActive(true);
+            m_UIManager.GetGameObject(m_Key.m_object_popup_panel).SetActive(true);
+        }
+    }
+
+    internal void DisconnectionPopup()
+    {
+        if (m_UIManager.GetGameObject(m_Key.m_object_disconnect_popup) != null && !m_IsExit)
+        {
+            m_UIManager.GetGameObject(m_Key.m_object_disconnect_popup).SetActive(true);
+            m_UIManager.GetGameObject(m_Key.m_object_popup_panel).SetActive(true);
+        }
+    }
+
+    internal void CheckAndClosePopups()
+    {
+        if (m_UIManager.GetGameObject(m_Key.m_object_reconnect_popup).activeInHierarchy)
+        {
+            ClosePopup("reconnect");
+        }
+        if (m_UIManager.GetGameObject(m_Key.m_object_disconnect_popup).activeInHierarchy)
+        {
+            ClosePopup("disconnect");
+        }
     }
 
     private void OnSettingButtonClicked()
@@ -460,6 +496,12 @@ public class GameManager : MonoBehaviour
             case "quit":
                 m_UIManager.GetGameObject(m_Key.m_object_quit_popup).SetActive(false);
                 break;
+             case "reconnect":
+                m_UIManager.GetGameObject(m_Key.m_object_reconnect_popup).SetActive(false);
+                break;
+            case "disconnect":
+                m_UIManager.GetGameObject(m_Key.m_object_disconnect_popup).SetActive(false);
+                break;
         }
 
         m_UIManager.GetGameObject(m_Key.m_object_popup_panel).SetActive(false);
@@ -481,6 +523,12 @@ public class GameManager : MonoBehaviour
             case "quit":
                 m_UIManager.GetGameObject(m_Key.m_object_quit_popup).SetActive(true);
                 break;
+            case "reconnect":
+                m_UIManager.GetGameObject(m_Key.m_object_reconnect_popup).SetActive(true);
+                break;
+            case "disconnect":
+                m_UIManager.GetGameObject(m_Key.m_object_disconnect_popup).SetActive(true);
+                break;
         }
 
         m_UIManager.GetGameObject(m_Key.m_object_popup_panel).SetActive(true);
@@ -496,7 +544,7 @@ public class GameManager : MonoBehaviour
         AutoSpin_Count = int.Parse(m_UIManager.GetText(m_Key.m_text_total_auto_spin).text);
         if (m_config)
         {
-            if(AutoSpin_Count < 10)
+            if (AutoSpin_Count < 10)
             {
                 AutoSpin_Count++;
                 m_UIManager.GetText(m_Key.m_text_total_auto_spin).text = AutoSpin_Count.ToString();
@@ -528,6 +576,26 @@ public class GameManager : MonoBehaviour
             m_AudioController.ToggleMute(false);
             m_music_obj.SetActive(true);
             m_UIManager.GetButton(m_Key.m_button_music_off).gameObject.SetActive(false);
+        }
+    }
+
+
+    private void OnSoundButtonClicked()
+    {
+        //DeanimateInfoMusicButton();
+
+        GameObject m_music_obj = m_UIManager.GetButton(m_Key.m_button_sound_on).gameObject;
+        if (m_music_obj.activeSelf)
+        {
+            m_AudioController.ToggleBG_Mute(true);
+            m_music_obj.SetActive(false);
+            m_UIManager.GetButton(m_Key.m_button_sound_off).gameObject.SetActive(true);
+        }
+        else
+        {
+            m_AudioController.ToggleBG_Mute(false);
+            m_music_obj.SetActive(true);
+            m_UIManager.GetButton(m_Key.m_button_sound_off).gameObject.SetActive(false);
         }
     }
 

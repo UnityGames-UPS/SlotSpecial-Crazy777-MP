@@ -11,6 +11,8 @@ public class KeyStruct
     internal string m_button_music_exit = "Music_Exit";
     internal string m_button_info_exit = "Info_Exit";
     internal string m_button_music = "Music";
+    internal string m_button_sound_on = "Sound_On";
+    internal string m_button_sound_off = "Sound_Off";
     internal string m_button_info = "Info";
     internal string m_button_max_auto_spin = "MaxAutoSpin";
     internal string m_button_auto_spin_plus = "AutoSpin_Plus";
@@ -100,5 +102,7 @@ public class KeyStruct
     internal string m_object_bet_panel = "Bet_Panel";
     internal string m_object_free_spin_panel = "FreeSpin_Panel";
     internal string m_object_low_balance_popup = "LowBalance_Popup";
+    internal string m_object_disconnect_popup = "Disconnection_Popup";
+    internal string m_object_reconnect_popup = "Reconnecting_Popup";
     #endregion
 }

@@ -85,9 +85,9 @@ public class AudioController : MonoBehaviour
     {
         switch (type)
         {
-            case "bg":
-                m_BG_Audio.mute = toggle;
-                break;
+            // case "bg":
+            //     m_BG_Audio.mute = toggleBG;
+            //     break;
             case "button":
                 m_Click_Audio.mute = toggle;
                 m_Spin_Audio.mute = toggle;
@@ -98,7 +98,7 @@ public class AudioController : MonoBehaviour
                 m_FreeSpin_Audio.mute = toggle;
                 break;
             case "all":
-                m_BG_Audio.mute = toggle;
+               // m_BG_Audio.mute = toggle;
                 m_Click_Audio.mute = toggle;
                 m_Win_Audio.mute = toggle;
                 m_Bonus_Audio.mute = toggle;
@@ -106,6 +106,11 @@ public class AudioController : MonoBehaviour
                 m_Spin_Audio.mute = toggle;
                 break;
         }
+    }
+    
+    internal void ToggleBG_Mute(bool toggle)
+    {
+        m_BG_Audio.mute = toggle;
     }
 
 }

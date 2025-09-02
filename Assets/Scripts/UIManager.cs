@@ -80,9 +80,9 @@ public class UIManager : MonoBehaviour
     private void UpdateSpriteDictionary()
     {
         uiSpriteDictionary.Clear();
-        foreach(UiSprite uiReference in uiSprite)
+        foreach (UiSprite uiReference in uiSprite)
         {
-            if(uiReference.Sprite != null && !uiSpriteDictionary.ContainsKey(uiReference.key))
+            if (uiReference.Sprite != null && !uiSpriteDictionary.ContainsKey(uiReference.key))
             {
                 uiSpriteDictionary.Add(uiReference.key, uiReference.Sprite);
             }
@@ -123,6 +123,35 @@ public class UIManager : MonoBehaviour
         }
         return null;
     }
+    // internal void ReconnectionPopup()
+    // {
+    //     if (uiGameObjectDictionary.ContainsKey("Reconnecting_Popup"))
+    //     {
+    //         uiGameObjectDictionary["Reconnecting_Popup"].SetActive(true);
+    //     }
+    // }
+    // internal void DisconnectionPopup()
+    // {
+    //     if (uiGameObjectDictionary.ContainsKey("Disconnection_Popup"))
+    //     {
+
+    //         uiGameObjectDictionary["Disconnection_Popup"].SetActive(true);
+    //     }
+
+    // }
+    // internal void CheckAndClosePopups()
+    // {
+    //     if (uiGameObjectDictionary["Reconnecting_Popup"].activeInHierarchy)
+    //     {
+    //         ClosePopup(ReconnectPopup_Object);
+    //     }
+    //     if (DisconnectPopup_Object.activeInHierarchy)
+    //     {
+    //         ClosePopup(DisconnectPopup_Object);
+    //     }
+    // }
+
+
 
     internal TMP_Text GetText(string key)
     {
