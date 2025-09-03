@@ -202,7 +202,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator InitialAnimation()
     {
         //m_UIManager.GetGameObject(m_Key.m_object_start_animation_panel).SetActive(true);
-        m_UIManager.GetGameObject(m_Key.m_object_game_buttons_panel).SetActive(false);
+      //  m_UIManager.GetGameObject(m_Key.m_object_game_buttons_panel).SetActive(false);
 
         //m_Initial_Animation[0].SetActive(true);
         //m_Initial_Animation[0].GetComponent<ImageAnimation>().StartAnimation();
@@ -233,7 +233,7 @@ public class GameManager : MonoBehaviour
         OnGameStarted?.Invoke();
 
         //m_UIManager.GetGameObject(m_Key.m_object_start_animation_panel).SetActive(false);
-        m_UIManager.GetGameObject(m_Key.m_object_game_buttons_panel).SetActive(true);
+       // m_UIManager.GetGameObject(m_Key.m_object_game_buttons_panel).SetActive(true);
 
         StopCoroutine(M_Initial_Animation);
     }
