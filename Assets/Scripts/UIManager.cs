@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     [Header("GameObjects References")]
     [SerializeField] private List<UiGameObject> uiGameObject = new List<UiGameObject>();
     private Dictionary<string, GameObject> uiGameObjectDictionary = new Dictionary<string, GameObject>();
+    public TMP_Text respinsRangeText;
 
     #endregion
 

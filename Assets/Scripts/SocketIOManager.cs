@@ -25,6 +25,7 @@ public class SocketIOManager : MonoBehaviour
 
     internal GameData initialData = null;
     internal UiData initUIData = null;
+    internal Features initfeturesData = null;
     internal GameData resultData = null;
     internal Root resultdata = null;
     internal Player playerdata = null;
@@ -341,6 +342,7 @@ public class SocketIOManager : MonoBehaviour
                     initialData = myData.gameData;
                     initUIData = myData.uiData;
                     playerdata = myData.player;
+                    initfeturesData=myData.features;
                     //bonusdata = myData.message.BonusData;
                     if (!SetInit)
                     {
@@ -663,6 +665,15 @@ public class Features
 {
     public int defaultPayout { get; set; }
     public Respin respin { get; set; }
+    public AnyPayouts anyPayouts { get; set; }
+}
+
+[Serializable]
+public class AnyPayouts
+{
+    public double sevens { get; set; }
+    public double bars { get; set; }
+    public double defaults { get; set; }
 }
 
 [Serializable]

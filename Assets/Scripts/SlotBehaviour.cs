@@ -175,7 +175,7 @@ public class SlotBehaviour : MonoBehaviour
 
         //TotalBet_text.text = (SocketManager.initialData.Bets[BetCounter] * Lines).ToString(); //To Be Implemented In Future
 
-        m_UIManager.GetText(m_Key.m_text_win_amount).text = "0.00";
+        m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> "+"0.00";
 
         m_UIManager.GetText(m_Key.m_text_balance_amount).text = SocketManager.playerdata.balance.ToString("f2");
 
@@ -413,7 +413,7 @@ public class SlotBehaviour : MonoBehaviour
             ToggleButtonGrp(true);
             yield break;
         }
-        m_UIManager.GetText(m_Key.m_text_win_amount).text = "0.00";
+        m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> "+"0.00";
 
         // Play the spin audio if the audio controller is available
         //if (audioController)
@@ -588,19 +588,19 @@ public class SlotBehaviour : MonoBehaviour
             int spins = SocketManager.resultdata.payload.respinCount + 1;
             double totalWin = SocketManager.resultdata.payload.currentWinning;
             SingleRespinWin = totalWin / spins;
-            m_UIManager.GetText(m_Key.m_text_win_amount).text = SingleRespinWin.ToString("F2");
+            m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> "+ SingleRespinWin.ToString("F2");
             m_UIManager.GetText(m_Key.m_text_balance_amount).text = (currentBalance + SingleRespinWin).ToString("F2");
 
         }
         else if (SocketManager.resultdata.payload.isRespin && IsFreeSpin)
         {
             double currentBalance = double.Parse(m_UIManager.GetText(m_Key.m_text_balance_amount).text);
-            m_UIManager.GetText(m_Key.m_text_win_amount).text = SingleRespinWin.ToString("F2");
+            m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> "+ SingleRespinWin.ToString("F2");
             m_UIManager.GetText(m_Key.m_text_balance_amount).text = (currentBalance + SingleRespinWin).ToString("F2");
         }
         else
         {
-            m_UIManager.GetText(m_Key.m_text_win_amount).text = SocketManager.resultdata.payload.currentWinning.ToString("F2");
+            m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> "+ SocketManager.resultdata.payload.currentWinning.ToString("F2");
             m_UIManager.GetText(m_Key.m_text_balance_amount).text = SocketManager.playerdata.balance.ToString("F2");
 
         }

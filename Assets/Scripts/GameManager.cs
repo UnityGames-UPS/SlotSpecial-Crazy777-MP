@@ -240,7 +240,8 @@ public class GameManager : MonoBehaviour
 
     internal void SetBetMultiplier()
     {
-
+         m_UIManager.GetText(m_Key.m_text_any).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_SocketManager.initfeturesData.anyPayouts.defaults.ToString())).ToString();
+         m_UIManager.respinsRangeText.text= m_SocketManager.initfeturesData.respin.min + "~" + m_SocketManager.initfeturesData.respin.max;
         for (int i = 1; i < m_SocketManager.initUIData.paylines.symbols.Count; i++)
         {
             Paylines m_Cur_Payline = m_SocketManager.initUIData.paylines;
@@ -252,7 +253,7 @@ public class GameManager : MonoBehaviour
                     //HACK: Data Update In Upper Section
                     m_UIManager.GetText(m_Key.m_text_tripple_7_combo).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
 
-                    m_UIManager.GetText(m_Key.m_text_any_7).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.mixedPayout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_any_7).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_SocketManager.initfeturesData.anyPayouts.sevens.ToString())).ToString();
 
                     //Data Update In Paytable
                     m_UIManager.GetText(m_Key.m_text_pay_tripple_7).text = "<color=yellow>3X </color>" + m_Cur_Symbol.payout.ToString();
@@ -276,7 +277,7 @@ public class GameManager : MonoBehaviour
                 case ("BAR/BAR"):
                     //HACK: Data Update In Upper Section
                     m_UIManager.GetText(m_Key.m_text_double_bar_combo).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
-                    m_UIManager.GetText(m_Key.m_text_any_bar).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.mixedPayout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_any_bar).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_SocketManager.initfeturesData.anyPayouts.bars.ToString())).ToString();
                     m_UIManager.GetText(m_Key.m_text_pay_any_bar).text = "<color=yellow>3X </color>" + m_Cur_Symbol.payout.ToString();
 
                     //Data Update In Paytable
@@ -311,7 +312,8 @@ public class GameManager : MonoBehaviour
                     m_UIManager.GetText(m_Key.m_text_pay_respin_description).text = m_Cur_Symbol.description.ToString();
                     break;
                 default:
-                    m_UIManager.GetText(m_Key.m_text_any).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_Cur_Symbol.payout.ToString())).ToString();
+                    m_UIManager.GetText(m_Key.m_text_any).text = (m_SocketManager.initialData.bets[m_SlotBehaviour.BetCounter] * double.Parse(m_SocketManager.initfeturesData.anyPayouts.defaults.ToString())).ToString();
+                    // m_UIManager.GetText(m_Key.m_text_any).text = "0.00";
                     break;
             }
         }
