@@ -298,7 +298,7 @@ public class SlotBehaviour : MonoBehaviour
 
     private void CompareBalance()
     {
-        if (currentBalance < currentTotalBet)
+        if (SocketManager.playerdata.balance < currentTotalBet)
         {
             m_GameManager.OpenCloseLowBalancePopup(true);
             //m_UIManager.GetButton(m_Key.m_button_auto_spin).interactable = false;
@@ -413,7 +413,7 @@ public class SlotBehaviour : MonoBehaviour
             ToggleButtonGrp(true);
             yield break;
         }
-        m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> "+"0.00";
+        m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> " + "0.00";
 
         // Play the spin audio if the audio controller is available
         //if (audioController)
@@ -449,6 +449,7 @@ public class SlotBehaviour : MonoBehaviour
         }
 
         // Handle the betting and balance updates
+        currentBalance = SocketManager.playerdata.balance;
         double bet = IsFreeSpin ? 0.0 : currentTotalBet; // No bet deduction during free spins
         double balance = currentBalance;
 
@@ -522,7 +523,8 @@ public class SlotBehaviour : MonoBehaviour
         //}
 
         if (m_GameManager.TurboSpin || IsFreeSpin)
-        { StopSpinToggle = true;
+        {
+            StopSpinToggle = true;
             //yield return new WaitForSeconds(0.1f);
         }
         else
@@ -543,10 +545,10 @@ public class SlotBehaviour : MonoBehaviour
         // }
 
         // Stop all tweens running for each slot
-            for (int i = 0; i < numberOfSlots - 1; i++)
-            {
-                yield return StopTweening(5, Slot_Transform[i], i, simulatedResultReel[i] != 0 ? 0 : m_GameManager.StopPos_Plus, StopSpinToggle);
-            }
+        for (int i = 0; i < numberOfSlots - 1; i++)
+        {
+            yield return StopTweening(5, Slot_Transform[i], i, simulatedResultReel[i] != 0 ? 0 : m_GameManager.StopPos_Plus, StopSpinToggle);
+        }
         if (!IsFreeSpin)
         {
             if (m_Bonus_Found && !m_GameManager.TurboSpin)
@@ -588,19 +590,19 @@ public class SlotBehaviour : MonoBehaviour
             int spins = SocketManager.resultdata.payload.respinCount + 1;
             double totalWin = SocketManager.resultdata.payload.currentWinning;
             SingleRespinWin = totalWin / spins;
-            m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> "+ SingleRespinWin.ToString("F2");
+            m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> " + SingleRespinWin.ToString("F2");
             m_UIManager.GetText(m_Key.m_text_balance_amount).text = (currentBalance + SingleRespinWin).ToString("F2");
 
         }
         else if (SocketManager.resultdata.payload.isRespin && IsFreeSpin)
         {
             double currentBalance = double.Parse(m_UIManager.GetText(m_Key.m_text_balance_amount).text);
-            m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> "+ SingleRespinWin.ToString("F2");
+            m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> " + SingleRespinWin.ToString("F2");
             m_UIManager.GetText(m_Key.m_text_balance_amount).text = (currentBalance + SingleRespinWin).ToString("F2");
         }
         else
         {
-            m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> "+ SocketManager.resultdata.payload.currentWinning.ToString("F2");
+            m_UIManager.GetText(m_Key.m_text_win_amount).text = "<b><size=20>Win:</size></b> " + SocketManager.resultdata.payload.currentWinning.ToString("F2");
             m_UIManager.GetText(m_Key.m_text_balance_amount).text = SocketManager.playerdata.balance.ToString("F2");
 
         }
@@ -663,6 +665,7 @@ public class SlotBehaviour : MonoBehaviour
                 Debug.Log(string.Concat("<color=orange><b>", "Error Occured..." + e, "</b></color>"));
             }
         }
+        currentBalance = SocketManager.playerdata.balance;
     }
 
     #region RESULT_FUNCTIONALITIES
