@@ -210,6 +210,7 @@ public class SocketIOManager : MonoBehaviour
     {
         Debug.LogWarning("⚠️ Disconnected from server.");
         isConnected = false;
+        gameManager.DisconnectionPopup();
         ResetPingRoutine();
     } //Back2 end
 
